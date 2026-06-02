@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Music &amp; Personal Video — Yuriy Dimitrov</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080808;--surface:#101010;--surface2:#161616;--border:rgba(255,255,255,0.07);--accent:#c8a96e;--accent-border:rgba(200,169,110,0.22);--text:#f0ede8;--muted:#6b6860;--display:'Cormorant Garamond',Georgia,serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--mono);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3rem;border-bottom:1px solid var(--border);background:rgba(8,8,8,0.96);backdrop-filter:blur(20px)}
+.nav-logo{font-family:var(--display);font-size:1.1rem;font-weight:300;color:var(--text);text-decoration:none}.nav-logo span{color:var(--accent);font-style:italic}
+.nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0}
+.nav-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--accent);transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-drawer{position:fixed;top:64px;left:0;right:0;background:rgba(8,8,8,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem;display:none;flex-direction:column;gap:1.2rem;z-index:199}
+.nav-drawer.open{display:flex}
+.nav-drawer a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.page-header{padding:calc(70px + 4rem) 3rem 3rem;max-width:1400px;margin:0 auto}
+.header-eyebrow{font-family:var(--mono);font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.7rem}
+.header-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+.page-header h1{font-family:var(--display);font-size:clamp(3rem,6vw,6rem);font-weight:200;color:var(--text);line-height:1}
+.page-header h1 em{color:var(--accent);font-style:italic}
+.divider{height:1px;background:var(--border)}
+.intro{max-width:1400px;margin:0 auto;padding:2rem 3rem 0}
+.intro p{font-family:var(--mono);font-size:0.72rem;line-height:2;color:rgba(240,237,232,0.55);max-width:680px}
+.grid-wrap{max-width:1400px;margin:0 auto;padding:2.5rem 3rem 5rem}
+.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
+.vid-card{overflow:hidden;cursor:pointer;background:linear-gradient(135deg,#1a1a1a,#0c0c0c);position:relative;aspect-ratio:16/9}
+.vid-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.8);transition:transform 0.5s,filter 0.4s}
+.vid-card:hover img{transform:scale(1.05);filter:brightness(1)}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:rgba(200,169,110,0.9);display:flex;align-items:center;justify-content:center;transition:transform 0.3s;pointer-events:none}
+.vid-card:hover .play{transform:translate(-50%,-50%) scale(1.12)}
+.play svg{width:24px;height:24px;fill:#0a0a0a;margin-left:3px}
+.label{position:absolute;bottom:0;left:0;right:0;padding:1.1rem;background:linear-gradient(to top,rgba(8,8,8,0.9),transparent);font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;color:var(--text);pointer-events:none}
+.video-modal{position:fixed;inset:0;background:rgba(4,4,4,0.97);z-index:9999;display:none;align-items:center;justify-content:center}
+.video-modal.open{display:flex}
+.vm-inner{width:min(1000px,94vw)}
+.vm-iframe{width:100%;aspect-ratio:16/9;border:none;background:#000}
+.vm-close{position:fixed;top:1rem;right:1rem;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);background:rgba(8,8,8,0.9);border:1px solid var(--accent-border);padding:0.5rem 1rem;cursor:pointer;z-index:10000}
+.vm-close:hover{background:var(--accent);color:var(--bg)}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hamburger{display:flex !important}.page-header{padding:calc(70px + 2.5rem) 1.5rem 2rem}.intro{padding:1.5rem 1.5rem 0}.grid-wrap{padding:2rem 1.5rem 4rem}.photo-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Yuriy <span>Dimitrov</span></a>
+  <ul class="nav-links">
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="graphic.html">Graphic</a></li>
+    <li><a href="video.html">Product/Brand</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="realestate.html">Real Estate</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="uxui.html">UX/UI Design</a>
+  <a href="graphic.html">Graphic Design</a>
+  <a href="video.html">Product &amp; Brand Video</a>
+  <a href="music.html">Music &amp; Personal</a>
+  <a href="realestate.html">Real Estate Media</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+<div class="page-header">
+  <span class="header-eyebrow">Portfolio · Category 05</span>
+  <h1>Music &amp;<br><em>Personal Video</em></h1>
+</div>
+<div class="divider"></div>
+<div class="intro">
+  <p>Music videos, wedding films, and creative work beyond the commercial world — projects driven by story, emotion, and craft. Click any video to watch full screen.</p>
+</div>
+<div class="grid-wrap">
+  <div class="photo-grid">
+    <div class="vid-card" onclick="openVid('lpwkAddf2HM')"><img src="https://i.ytimg.com/vi/lpwkAddf2HM/hqdefault.jpg" alt="Milla Balaban — Official Music Video" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://i.ytimg.com/vi/lpwkAddf2HM/mqdefault.jpg';}else{this.style.opacity=0;}"/><div class="play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div><div class="label">Milla Balaban — Official Music Video</div></div>
+    <div class="vid-card" onclick="openVid('hXcEbN80PHo')"><img src="https://i.ytimg.com/vi/hXcEbN80PHo/hqdefault.jpg" alt="Carol of the Bells / God Rest Ye Merry Gentlemen" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://i.ytimg.com/vi/hXcEbN80PHo/mqdefault.jpg';}else{this.style.opacity=0;}"/><div class="play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div><div class="label">Carol of the Bells / God Rest Ye Merry Gentlemen</div></div>
+    <div class="vid-card" onclick="openVid('AgKVDfmTKAk')"><img src="https://i.ytimg.com/vi/AgKVDfmTKAk/hqdefault.jpg" alt="Благодарю 2025 — Official Music Video" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://i.ytimg.com/vi/AgKVDfmTKAk/mqdefault.jpg';}else{this.style.opacity=0;}"/><div class="play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div><div class="label">Благодарю 2025 — Official Music Video</div></div>
+    <div class="vid-card" onclick="openVid('imWUm8CZ0wk')"><img src="https://i.ytimg.com/vi/imWUm8CZ0wk/hqdefault.jpg" alt="Nikita & Vera — Wedding Trailer 2022" loading="lazy" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://i.ytimg.com/vi/imWUm8CZ0wk/mqdefault.jpg';}else{this.style.opacity=0;}"/><div class="play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div><div class="label">Nikita & Vera — Wedding Trailer 2022</div></div>
+  </div>
+</div>
+<div class="video-modal" id="vmodal" onclick="if(event.target===this)closeVid()">
+  <button class="vm-close" onclick="closeVid()">✕ Close</button>
+  <div class="vm-inner"><iframe id="vframe" class="vm-iframe" src="" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;fullscreen" allowfullscreen></iframe></div>
+</div>
+<script>
+function openVid(id){document.getElementById('vframe').src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&controls=1';document.getElementById('vmodal').classList.add('open');document.body.style.overflow='hidden';}
+function closeVid(){document.getElementById('vframe').src='';document.getElementById('vmodal').classList.remove('open');document.body.style.overflow='';}
+function toggleNav(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('nav-drawer').classList.toggle('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVid();});
+</script>
+</body>
+</html>
