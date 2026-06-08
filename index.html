@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Yuriy Y. Dimitrov — Creative Digital Producer</title>
+<title>Yuriy Y. Dimitrov — Web Designer &amp; Digital Creative</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -69,14 +69,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content
 .section-intro p{font-family:var(--mono);font-size:0.65rem;line-height:2;color:var(--muted);max-width:560px;margin:0 auto}
 
 /* ── CATEGORIES — FLAT DARK CARDS (Image 5 style) ── */
-.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:rgba(255,255,255,0.06);max-width:1400px;margin:0 auto;padding:0 3rem 6rem}
-.cat-card{display:flex;flex-direction:column;background:var(--surface);padding:2.5rem;text-decoration:none;position:relative;overflow:hidden;transition:background 0.3s;border-top:2px solid transparent;transition:all 0.35s}
+.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,0.06);max-width:1600px;margin:0 auto;padding:0 3rem 6rem}
+.cat-card{display:flex;flex-direction:column;background:var(--surface);padding:2rem 1.6rem;text-decoration:none;position:relative;overflow:hidden;transition:background 0.3s;border-top:2px solid transparent;transition:all 0.35s}
 .cat-card:hover{background:var(--surface2);border-top-color:var(--accent)}
 .cat-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(200,169,110,0.3);color:var(--accent);margin-bottom:1.8rem;transition:border-color 0.3s,transform 0.3s;flex-shrink:0}
 .cat-card:hover .cat-icon{border-color:var(--accent);transform:scale(1.05)}
 .cat-icon svg{width:22px;height:22px}
 .cat-number{font-family:var(--mono);font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);opacity:0.6;margin-bottom:0.5rem}
-.cat-title{font-family:var(--serif);font-size:1.6rem;font-weight:400;color:var(--text);margin-bottom:0.8rem;line-height:1.1}
+.cat-title{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--text);margin-bottom:0.8rem;line-height:1.15}
 .cat-desc{font-family:var(--mono);font-size:0.58rem;line-height:1.9;color:rgba(240,237,232,0.45);flex:1;margin-bottom:2rem}
 .cat-btn{display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--mono);font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.65rem 1.2rem;border:1px solid rgba(200,169,110,0.4);color:var(--accent);background:transparent;text-decoration:none;position:relative;overflow:hidden;transition:color 0.35s,border-color 0.35s;align-self:flex-start}
 .cat-btn::before{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94)}
@@ -175,7 +175,7 @@ footer p{font-family:var(--mono);font-size:0.52rem;color:var(--muted);letter-spa
 
 /* Laptop */
 @media(max-width:1200px){
-  .categories{padding:0 2rem 5rem}
+  .categories{grid-template-columns:repeat(3,1fr);padding:0 2rem 5rem}
   .about,.contact-section{padding:5rem 2rem}
   .section-intro{padding:4rem 2rem 2.5rem}
 }
@@ -277,11 +277,11 @@ footer p{font-family:var(--mono);font-size:0.52rem;color:var(--muted);letter-spa
     <span class="hero-tag">Available for New Projects</span>
     <h1 class="hero-name">Yuriy Y.<em>Dimitrov</em></h1>
     <div class="hero-roles">
+      <span>Web Designer</span>
       <span>UX/UI Designer</span>
       <span>Visual Storyteller</span>
-      <span>Creative Director</span>
     </div>
-    <p class="hero-bio">A multidisciplinary creative with a refined eye for design and storytelling. I craft compelling visual experiences — from intuitive digital interfaces to cinematic video and real estate media — bringing clarity, elegance, and purpose to every project.</p>
+    <p class="hero-bio">A web designer with a refined eye for layout, typography, and interaction. I craft responsive websites and digital experiences that are as intuitive as they are beautiful — from design systems and high-fidelity prototypes to fully built, pixel-perfect pages that bring brands to life on every screen.</p>
     <div class="hero-ctas">
       <a href="#work" class="btn-primary">View Work</a>
       <a href="#contact" class="btn-secondary">Get in Touch</a>
@@ -361,8 +361,8 @@ footer p{font-family:var(--mono);font-size:0.52rem;color:var(--muted);letter-spa
   <div class="reveal">
     <span class="about-eyebrow">About Me</span>
     <h2>Creating work<br><em>that moves people</em></h2>
-    <p>I'm Yuriy Dimitrov — a US-based creative who bridges UX/UI design, video production, graphic design, and real estate media. My clients range from luxury watch retailers and industrial B2B companies to residential real estate agencies.</p>
-    <p>Every project starts with a question: what does success look like for this person, this brand, this audience? Then I design backwards from that answer.</p>
+    <p>I'm Yuriy Dimitrov — a US-based web designer who blends UX/UI design with hands-on front-end craft. I design and build responsive websites, then round out projects with video production, graphic design, and real estate media. My clients range from luxury watch retailers and industrial B2B companies to residential real estate agencies.</p>
+    <p>Every project starts with a question: what does success look like for this person, this brand, this audience? Then I design backwards from that answer — all the way to a polished, responsive site.</p>
     <div class="about-stats">
       <div class="about-stat"><span class="about-stat-num">8+</span><span class="about-stat-label">Years</span></div>
       <div class="about-stat"><span class="about-stat-num">40+</span><span class="about-stat-label">Projects</span></div>
@@ -387,7 +387,7 @@ footer p{font-family:var(--mono);font-size:0.52rem;color:var(--muted);letter-spa
 <div class="contact-section" id="contact">
   <div class="reveal">
     <h2>Let's make<br><em>something great</em></h2>
-    <p>Open to freelance projects, full-time UX/UI roles, and creative collaborations. Available for remote work nationwide — and on-site anywhere.</p>
+    <p>Open to freelance projects, full-time web design and UX/UI roles, and creative collaborations. Available for remote work nationwide — and on-site anywhere.</p>
     <div class="contact-email-row">
       <a href="mailto:yuriydimi@gmail.com" class="contact-email-link">yuriydimi@gmail.com</a>
     </div>
