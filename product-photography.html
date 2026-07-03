@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Product Photography — Yuriy Dimitrov</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080808;--surface:#101010;--surface2:#161616;--border:rgba(255,255,255,0.07);--accent:#c8a96e;--accent-pale:rgba(200,169,110,0.1);--accent-border:rgba(200,169,110,0.22);--text:#f0ede8;--muted:#6b6860;--display:'Cormorant Garamond',Georgia,serif;--mono:'DM Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--mono);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3rem;border-bottom:1px solid var(--border);background:rgba(8,8,8,0.96);backdrop-filter:blur(20px)}
+.nav-logo{font-family:var(--display);font-size:1.1rem;font-weight:300;color:var(--text);text-decoration:none}.nav-logo span{color:var(--accent);font-style:italic}
+.nav-back{font-family:var(--mono);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;display:flex;align-items:center;gap:0.5rem}.nav-back::before{content:'←'}.nav-back:hover{color:var(--accent)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--accent);transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-drawer{position:fixed;top:64px;left:0;right:0;background:rgba(8,8,8,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem;display:none;flex-direction:column;gap:1.2rem;z-index:199}
+.nav-drawer.open{display:flex}
+.nav-drawer a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.page-header{padding:calc(70px + 5rem) 3rem 3rem;max-width:1400px;margin:0 auto}
+.header-eyebrow{font-family:var(--mono);font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.7rem}
+.header-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+.page-header h1{font-family:var(--display);font-size:clamp(3rem,6vw,6rem);font-weight:200;color:var(--text);line-height:1}
+.page-header h1 em{color:var(--accent);font-style:italic}
+.divider{height:1px;background:var(--border)}
+.intro{max-width:1400px;margin:0 auto;padding:2rem 3rem 0}
+.intro p{font-family:var(--mono);font-size:0.72rem;line-height:2;color:rgba(240,237,232,0.55);max-width:680px}
+/* Category blocks */
+.cat-wrap{max-width:1400px;margin:0 auto;padding:2.5rem 3rem 5rem}
+.cat-block{margin-bottom:4rem}
+.cat-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.4rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border)}
+.cat-head h2{font-family:var(--display);font-size:2rem;font-weight:300;color:var(--text);font-style:italic}
+.cat-count{font-family:var(--mono);font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent)}
+.g-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.g-card{position:relative;overflow:hidden;cursor:pointer;background:var(--surface2);aspect-ratio:4/3}
+.g-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s,filter 0.3s;filter:brightness(0.9)}
+.g-card:hover img{transform:scale(1.05);filter:brightness(1.05)}
+.g-card-ov{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1rem;opacity:0;transition:opacity 0.35s;background:linear-gradient(to top,rgba(8,8,8,0.85),transparent 55%)}
+.g-card:hover .g-card-ov{opacity:1}
+.g-card-cat{font-family:var(--mono);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent)}
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(4,4,4,0.97);z-index:9999;display:none;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lb-inner{max-width:92vw;max-height:88vh;position:relative}
+.lb-inner img{max-width:92vw;max-height:84vh;object-fit:contain;display:block;margin:0 auto}
+.lb-close{position:fixed;top:1.2rem;right:1.2rem;font-family:var(--mono);font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);background:rgba(8,8,8,0.9);border:1px solid var(--accent-border);padding:0.6rem 1.2rem;cursor:pointer;z-index:10000}
+.lb-close:hover{background:var(--accent);color:var(--bg)}
+.lb-nav{position:fixed;top:50%;transform:translateY(-50%);background:none;border:none;font-family:var(--display);font-size:3rem;font-weight:200;color:rgba(200,169,110,0.7);cursor:pointer;padding:1.5rem;z-index:10000}.lb-nav:hover{color:var(--accent)}
+.lb-prev{left:0}.lb-next{right:0}
+.lb-caption{position:fixed;bottom:0;left:0;right:0;padding:1rem 2rem;background:linear-gradient(to top,rgba(4,4,4,0.85),transparent);font-family:var(--mono);font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);text-align:center}
+@media(max-width:960px){nav{padding:1rem 1.5rem}.page-header{padding:calc(70px + 3rem) 1.5rem 2rem}.cat-wrap{padding:2rem 1.5rem 4rem}.g-grid{grid-template-columns:1fr 1fr}.cat-head h2{font-size:1.6rem}}
+@media(max-width:600px){.g-grid{grid-template-columns:1fr 1fr;gap:3px}}
+
+.nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0}
+.nav-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s}
+.nav-links a:hover{color:var(--accent)}
+.hamburger{display:none}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex !important}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Yuriy <span>Dimitrov</span></a>
+  <ul class="nav-links">
+    <li><a href="uxui.html">UX/UI</a></li>
+    <li><a href="graphic.html">Graphic</a></li>
+    <li><a href="video.html">Product/Brand</a></li>
+    <li><a href="product-photography.html">Product Photography</a></li>
+    <li><a href="music.html">Music</a></li>
+    <li><a href="realestate.html">Real Estate</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="uxui.html">UX/UI Design</a>
+  <a href="graphic.html">Graphic Design</a>
+  <a href="video.html">Product &amp; Brand Video</a>
+  <a href="product-photography.html">Product Photography</a>
+  <a href="music.html">Music &amp; Personal</a>
+  <a href="realestate.html">Real Estate Media</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+<div class="page-header">
+  <span class="header-eyebrow">Portfolio · Product Photography</span>
+  <h1>Product<br><em>Photography</em></h1>
+</div>
+<div class="divider"></div>
+<div class="intro">
+  <p>Clean, detail-driven product photography — built to sell. Click any image to view it full screen.</p>
+</div>
+<div class="cat-wrap">
+<section class="cat-block"><div class="cat-head"><h2>Product Photography</h2><span class="cat-count">26 pieces</span></div><div class="g-grid"><div class="g-card" onclick="openLB(0)"><img src="product-photography-images/1.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(1)"><img src="product-photography-images/2.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(2)"><img src="product-photography-images/3.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(3)"><img src="product-photography-images/4.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(4)"><img src="product-photography-images/5.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(5)"><img src="product-photography-images/6.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(6)"><img src="product-photography-images/7.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(7)"><img src="product-photography-images/8.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(8)"><img src="product-photography-images/9.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(9)"><img src="product-photography-images/10.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(10)"><img src="product-photography-images/11.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(11)"><img src="product-photography-images/12.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(12)"><img src="product-photography-images/13.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(13)"><img src="product-photography-images/14.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(14)"><img src="product-photography-images/15.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(15)"><img src="product-photography-images/16.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(16)"><img src="product-photography-images/17.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(17)"><img src="product-photography-images/18.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(18)"><img src="product-photography-images/19.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(19)"><img src="product-photography-images/20.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(20)"><img src="product-photography-images/21.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(21)"><img src="product-photography-images/22.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(22)"><img src="product-photography-images/23.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(23)"><img src="product-photography-images/24.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(24)"><img src="product-photography-images/25.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div><div class="g-card" onclick="openLB(25)"><img src="product-photography-images/26.jpg" alt="Product Photography" loading="lazy"/><div class="g-card-ov"><span class="g-card-cat">Product Photography</span></div></div></div></section>
+</div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLB()">
+  <button class="lb-close" onclick="closeLB()">✕ Close</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();navLB(-1)">‹</button>
+  <div class="lb-inner"><img id="lb-img" src="" alt=""/></div>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();navLB(1)">›</button>
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+<script>
+var LB_SRC=["product-photography-images/1.jpg","product-photography-images/2.jpg","product-photography-images/3.jpg","product-photography-images/4.jpg","product-photography-images/5.jpg","product-photography-images/6.jpg","product-photography-images/7.jpg","product-photography-images/8.jpg","product-photography-images/9.jpg","product-photography-images/10.jpg","product-photography-images/11.jpg","product-photography-images/12.jpg","product-photography-images/13.jpg","product-photography-images/14.jpg","product-photography-images/15.jpg","product-photography-images/16.jpg","product-photography-images/17.jpg","product-photography-images/18.jpg","product-photography-images/19.jpg","product-photography-images/20.jpg","product-photography-images/21.jpg","product-photography-images/22.jpg","product-photography-images/23.jpg","product-photography-images/24.jpg","product-photography-images/25.jpg","product-photography-images/26.jpg"];
+var LB_CAP=["Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography","Product Photography"];
+var lbIdx=0;
+function openLB(i){lbIdx=i;updLB();document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden';}
+function closeLB(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+function navLB(d){lbIdx=(lbIdx+d+LB_SRC.length)%LB_SRC.length;updLB();}
+function updLB(){document.getElementById('lb-img').src=LB_SRC[lbIdx];document.getElementById('lb-caption').textContent=LB_CAP[lbIdx]+'  —  '+(lbIdx+1)+' / '+LB_SRC.length;}
+function toggleNav(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('nav-drawer').classList.toggle('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')navLB(-1);if(e.key==='ArrowRight')navLB(1);});
+</script>
+</body>
+</html>
