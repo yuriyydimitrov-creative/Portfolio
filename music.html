@@ -9,15 +9,37 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--mono);overflow-x:hidden}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3rem;border-bottom:1px solid var(--border);background:rgba(8,8,8,0.96);backdrop-filter:blur(20px)}
 .nav-logo{font-family:var(--display);font-size:1.1rem;font-weight:300;color:var(--text);text-decoration:none}.nav-logo span{color:var(--accent);font-style:italic}
-.nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0}
+.nav-links{list-style:none;display:flex;gap:2rem;margin:0;padding:0;align-items:center}
 .nav-links a{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s}
 .nav-links a:hover{color:var(--accent)}
+.nav-links li{display:flex;align-items:center}
+.nav-links a,.nav-dropdown-toggle{line-height:1;display:flex;align-items:center}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
 .hamburger span{display:block;width:24px;height:1.5px;background:var(--accent);transition:all 0.3s}
 .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 .nav-drawer{position:fixed;top:64px;left:0;right:0;background:rgba(8,8,8,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem;display:none;flex-direction:column;gap:1.2rem;z-index:199}
+.nav-dropdown{position:relative}
+.nav-dropdown-toggle{display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-family:var(--mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);transition:color 0.3s;user-select:none}
+.nav-dropdown-toggle svg{width:8px;height:8px;transition:transform 0.3s}
+.nav-dropdown:hover .nav-dropdown-toggle,.nav-dropdown.open .nav-dropdown-toggle{color:var(--accent)}
+.nav-dropdown:hover .nav-dropdown-toggle svg,.nav-dropdown.open .nav-dropdown-toggle svg{transform:rotate(180deg)}
+.nav-dropdown-menu{list-style:none;position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(0);min-width:210px;background:rgba(8,8,8,0.98);border:1px solid var(--accent-border,rgba(200,169,110,0.22));backdrop-filter:blur(20px);padding:1.25rem 0 0.4rem;margin-top:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s ease;z-index:9999}
+.nav-dropdown-toggle{padding-bottom:1.25rem;margin-bottom:-1.25rem}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-menu li{list-style:none}
+.nav-dropdown-menu a{display:block;padding:0.65rem 1.4rem;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color 0.25s,background 0.25s}
+.nav-dropdown-menu a:hover{color:var(--accent);background:rgba(200,169,110,0.06)}
+.drawer-group{display:flex;flex-direction:column;border-bottom:1px solid var(--border)}
+.drawer-toggle{display:flex;align-items:center;justify-content:space-between;background:none;border:none;padding:0.5rem 0;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);cursor:pointer;width:100%;text-align:left}
+.drawer-toggle svg{width:9px;height:9px;transition:transform 0.3s}
+.drawer-group.open .drawer-toggle{color:var(--accent)}
+.drawer-group.open .drawer-toggle svg{transform:rotate(180deg)}
+.drawer-submenu{max-height:0;overflow:hidden;transition:max-height 0.3s ease;display:flex;flex-direction:column}
+.drawer-group.open .drawer-submenu{max-height:240px}
+.drawer-submenu a{padding:0.6rem 0 0.6rem 1rem !important;border-bottom:none !important;font-size:0.62rem !important;color:rgba(240,237,232,0.5) !important}
+.drawer-submenu a:last-child{padding-bottom:1rem !important}
 .nav-drawer.open{display:flex}
 .nav-drawer a{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:0.5rem 0;border-bottom:1px solid var(--border)}
 .page-header{padding:calc(70px + 4rem) 3rem 3rem;max-width:1400px;margin:0 auto}
@@ -49,25 +71,46 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 <body>
 <nav>
   <a href="index.html" class="nav-logo">Yuriy <span>Dimitrov</span></a>
-  <ul class="nav-links">
-    <li><a href="uxui.html">UX/UI</a></li>
-    <li><a href="graphic.html">Graphic</a></li>
-    <li><a href="video.html">Product/Brand</a></li>
-    <li><a href="music.html">Music</a></li>
+    <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Design <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span>
+      <ul class="nav-dropdown-menu">
+        <li><a href="uxui.html">UX / UI Design</a></li>
+        <li><a href="graphic.html">Graphic Design</a></li>
+      </ul>
+    </li>
+    <li class="nav-dropdown">
+      <span class="nav-dropdown-toggle">Video Production <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></span>
+      <ul class="nav-dropdown-menu">
+        <li><a href="video.html">Product &amp; Brand Video</a></li>
+        <li><a href="music.html">Music &amp; Personal</a></li>
+        <li><a href="realestate.html">Real Estate Media</a></li>
+      </ul>
+    </li>
     <li><a href="product-photography.html">Product Photography</a></li>
-    <li><a href="realestate.html">Real Estate</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
   <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-drawer" id="nav-drawer">
   <a href="index.html">Home</a>
-  <a href="uxui.html">UX/UI Design</a>
-  <a href="graphic.html">Graphic Design</a>
-  <a href="video.html">Product &amp; Brand Video</a>
-  <a href="music.html">Music &amp; Personal</a>
+  <div class="drawer-group">
+    <button class="drawer-toggle" onclick="toggleDrawerGroup(this)">Design <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></button>
+    <div class="drawer-submenu">
+      <a href="uxui.html">UX / UI Design</a>
+      <a href="graphic.html">Graphic Design</a>
+    </div>
+  </div>
+  <div class="drawer-group">
+    <button class="drawer-toggle" onclick="toggleDrawerGroup(this)">Video Production <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg></button>
+    <div class="drawer-submenu">
+      <a href="video.html">Product &amp; Brand Video</a>
+      <a href="music.html">Music &amp; Personal</a>
+      <a href="realestate.html">Real Estate Media</a>
+    </div>
+  </div>
   <a href="product-photography.html">Product Photography</a>
-  <a href="realestate.html">Real Estate Media</a>
   <a href="index.html#contact">Contact</a>
 </div>
 <div class="page-header">
@@ -93,6 +136,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 <script>
 function openVid(id){document.getElementById('vframe').src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0&controls=1';document.getElementById('vmodal').classList.add('open');document.body.style.overflow='hidden';}
 function closeVid(){document.getElementById('vframe').src='';document.getElementById('vmodal').classList.remove('open');document.body.style.overflow='';}
+function toggleDrawerGroup(el){el.parentElement.classList.toggle('open');}
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.nav-dropdown.open').forEach(function(d){if(!d.contains(e.target))d.classList.remove('open');});
+});
+document.querySelectorAll('.nav-dropdown-toggle').forEach(function(t){
+  t.addEventListener('click',function(e){e.stopPropagation();var d=t.parentElement;var wasOpen=d.classList.contains('open');document.querySelectorAll('.nav-dropdown.open').forEach(function(o){o.classList.remove('open');});if(!wasOpen)d.classList.add('open');});
+});
 function toggleNav(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('nav-drawer').classList.toggle('open');}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVid();});
 </script>
